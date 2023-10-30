@@ -1,5 +1,7 @@
 package com.portifolio.joao.models;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import jakarta.persistence.Column;
@@ -7,7 +9,12 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.EqualsAndHashCode;
@@ -53,5 +60,32 @@ public class Admin {
     private String senha;
 
     // salt
+
+    @OneToMany(mappedBy = "categoria_to_admin")
+    private List<Categoria> categorias = new ArrayList<Categoria>();
+
+    @OneToMany(mappedBy = "imagem_to_admin")
+    private List<Imagem> imagens = new ArrayList<Imagem>();
+
+    @OneToMany(mappedBy = "cliente_to_admin")
+    private List<Cliente> clientes = new ArrayList<Cliente>();
+
+    @ManyToMany
+    @JoinTable( name = "admin_telefone",
+                joinColumns = @JoinColumn(name = "cod_admin"),
+                inverseJoinColumns = @JoinColumn(name = "cod_telefone"),
+                uniqueConstraints = @UniqueConstraint(columnNames = {"cod_admin", "cod_telefone"})
+    )
+    @Size(min = 1, max = 2)
+    private List<Telefone> telefones = new ArrayList<Telefone>();
+
+    @ManyToMany
+    @JoinTable( name = "admin_endereco",
+                joinColumns = @JoinColumn(name = "cod_admin"),
+                inverseJoinColumns = @JoinColumn(name = "cod_endereco"),
+                uniqueConstraints = @UniqueConstraint(columnNames = {"cod_admin", "cod_endereco"})
+    )
+    @Size(min = 1, max = 2)
+    private List<Endereco> enderecos = new ArrayList<Endereco>();
 
 }
