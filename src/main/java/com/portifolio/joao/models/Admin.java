@@ -7,6 +7,7 @@ import java.util.UUID;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -74,7 +75,7 @@ public class Admin {
     @OneToMany(mappedBy = "cliente_to_admin")
     private List<Cliente> clientes = new ArrayList<Cliente>();
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable( name = "admin_telefone",
                 joinColumns = @JoinColumn(name = "cod_admin"),
                 inverseJoinColumns = @JoinColumn(name = "cod_telefone"),
@@ -83,7 +84,7 @@ public class Admin {
     @Size(min = 1, max = 2)
     private List<Telefone> telefones = new ArrayList<Telefone>();
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable( name = "admin_endereco",
                 joinColumns = @JoinColumn(name = "cod_admin"),
                 inverseJoinColumns = @JoinColumn(name = "cod_endereco"),
