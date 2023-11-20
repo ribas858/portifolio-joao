@@ -1,7 +1,6 @@
 package com.portifolio.joao.services;
 
 import java.util.Optional;
-import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,7 +27,7 @@ public class ClienteService {
     }
 
     // READ
-    public Cliente findById(UUID id) {
+    public Cliente findById(Long id) {
         Optional<Cliente> cliente = this.clienteRepository.findById(id);
         return cliente.orElseThrow(() -> new RuntimeException(
             "Cliente não encontrado!! id:" + id + ", tipo: " + Cliente.class.getName()
@@ -43,7 +42,7 @@ public class ClienteService {
     }
 
     // DELETE
-    public void delete(UUID id) {
+    public void delete(Long id) {
         findById(id);
         try {
             this.clienteRepository.deleteById(id);

@@ -1,7 +1,6 @@
 package com.portifolio.joao.services;
 
 import java.util.Optional;
-import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,7 +21,7 @@ public class CidadeService {
     }
 
     // READ
-    public Cidade findById(UUID id) {
+    public Cidade findById(Long id) {
         Optional<Cidade> cidade = this.cidadeRepository.findById(id);
         return cidade.orElseThrow(() -> new RuntimeException(
             "Cidade não encontrada!! id:" + id + ", tipo: " + Cidade.class.getName()
@@ -37,7 +36,7 @@ public class CidadeService {
     }
 
     // DELETE
-    public void delete(UUID id) {
+    public void delete(Long id) {
         findById(id);
         try {
             this.cidadeRepository.deleteById(id);

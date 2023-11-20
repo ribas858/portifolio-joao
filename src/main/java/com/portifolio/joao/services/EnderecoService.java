@@ -1,7 +1,6 @@
 package com.portifolio.joao.services;
 
 import java.util.Optional;
-import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,7 +39,7 @@ public class EnderecoService {
     }
 
     // READ
-    public Endereco findById(UUID id) {
+    public Endereco findById(Long id) {
         Optional<Endereco> endereco = this.enderecoRepository.findById(id);
         return endereco.orElseThrow(() -> new RuntimeException(
             "Endereco não encontrado!! id:" + id + ", tipo: " + Endereco.class.getName()
@@ -55,7 +54,7 @@ public class EnderecoService {
     }
 
     // DELETE
-    public void delete(UUID id) {
+    public void delete(Long id) {
         findById(id);
         try {
             this.enderecoRepository.deleteById(id);

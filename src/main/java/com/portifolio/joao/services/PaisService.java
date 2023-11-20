@@ -1,7 +1,6 @@
 package com.portifolio.joao.services;
 
 import java.util.Optional;
-import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,7 +20,7 @@ public class PaisService {
     }
 
     // READ
-    public Pais findById(UUID id) {
+    public Pais findById(Long id) {
         Optional<Pais> pais = this.paisRepository.findById(id);
         return pais.orElseThrow(() -> new RuntimeException(
             "Pais não encontrado!! id:" + id + ", tipo: " + Pais.class.getName()
@@ -36,7 +35,7 @@ public class PaisService {
     }
 
     // DELETE
-    public void delete(UUID id) {
+    public void delete(Long id) {
         findById(id);
         try {
             this.paisRepository.deleteById(id);

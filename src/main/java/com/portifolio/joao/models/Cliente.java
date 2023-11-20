@@ -2,7 +2,6 @@ package com.portifolio.joao.models;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -32,9 +31,9 @@ public class Cliente {
 
     // cod_cliente
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "cod_cliente", unique = true)
-    private UUID cod_cliente;
+    private Long cod_cliente;
 
     // nome
     @Column(name = "nome", length = 20, nullable = false)

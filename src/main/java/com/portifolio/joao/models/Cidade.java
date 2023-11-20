@@ -1,6 +1,5 @@
 package com.portifolio.joao.models;
 
-import java.util.UUID;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -25,9 +24,9 @@ public class Cidade {
 
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "cod_cidade", unique = true)
-    private UUID cod_cidade;
+    private Long cod_cidade;
 
     @Column(name = "nome_cidade", length = 50, nullable = false)
     @NotBlank

@@ -2,7 +2,6 @@ package com.portifolio.joao.models;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
@@ -36,9 +35,9 @@ public class Admin {
     
     // cod_admin
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "cod_admin", unique = true)
-    private UUID cod_admin;
+    private Long cod_admin;
 
     // nome
     @NotBlank
@@ -66,15 +65,19 @@ public class Admin {
 
     // salt
 
-    @OneToMany(mappedBy = "categoria_to_admin")
+    @OneToMany(mappedBy = "categoria_to_admin", cascade = CascadeType.ALL)
+    @JsonProperty(access = Access.WRITE_ONLY)
     private List<Categoria> categorias = new ArrayList<Categoria>();
 
-    @OneToMany(mappedBy = "imagem_to_admin")
+    @OneToMany(mappedBy = "imagem_to_admin", cascade = CascadeType.ALL)
+    @JsonProperty(access = Access.WRITE_ONLY)
     private List<Imagem> imagens = new ArrayList<Imagem>();
 
-    @OneToMany(mappedBy = "cliente_to_admin")
+    @OneToMany(mappedBy = "cliente_to_admin", cascade = CascadeType.ALL)
+    @JsonProperty(access = Access.WRITE_ONLY)
     private List<Cliente> clientes = new ArrayList<Cliente>();
 
+    ////////////////////////////////////////////////////////////////////////////////
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable( name = "admin_telefone",
                 joinColumns = @JoinColumn(name = "cod_admin"),
@@ -82,8 +85,10 @@ public class Admin {
                 uniqueConstraints = @UniqueConstraint(columnNames = {"cod_admin", "cod_telefone"})
     )
     @Size(min = 1, max = 2)
+    @JsonProperty(access = Access.WRITE_ONLY)
     private List<Telefone> telefones = new ArrayList<Telefone>();
 
+    ////////////////////////////////////////////////////////////////////////////////
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable( name = "admin_endereco",
                 joinColumns = @JoinColumn(name = "cod_admin"),
@@ -91,6 +96,7 @@ public class Admin {
                 uniqueConstraints = @UniqueConstraint(columnNames = {"cod_admin", "cod_endereco"})
     )
     @Size(min = 1, max = 2)
+    @JsonProperty(access = Access.WRITE_ONLY)
     private List<Endereco> enderecos = new ArrayList<Endereco>();
 
 }

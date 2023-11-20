@@ -1,7 +1,6 @@
 package com.portifolio.joao.services;
 
 import java.util.Optional;
-import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,7 +20,7 @@ public class TelefoneService {
     }
 
     // READ
-    public Telefone findById(UUID id) {
+    public Telefone findById(Long id) {
         Optional<Telefone> telefone = this.telefoneRepository.findById(id);
         return telefone.orElseThrow( () -> new RuntimeException (
             "Telefone não encontrado!! id:" + id + ", tipo: " + Telefone.class.getName()
@@ -36,7 +35,7 @@ public class TelefoneService {
     }
 
     // DELETE
-    public void delete(UUID id) {
+    public void delete(Long id) {
         findById(id);
         try {
             this.telefoneRepository.deleteById(id);

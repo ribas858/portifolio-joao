@@ -1,7 +1,6 @@
 package com.portifolio.joao.services;
 
 import java.util.Optional;
-import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,7 +21,7 @@ public class EstadoService {
     }
 
     // READ
-    public Estado findById(UUID id) {
+    public Estado findById(Long id) {
         Optional<Estado> estado = this.estadoRepository.findById(id);
         return estado.orElseThrow(() -> new RuntimeException(
             "Estado não encontrado!! id:" + id + ", tipo: " + Estado.class.getName()
@@ -37,7 +36,7 @@ public class EstadoService {
     }
 
     // DELETE
-    public void delete(UUID id) {
+    public void delete(Long id) {
         findById(id);
         try {
             this.estadoRepository.deleteById(id);

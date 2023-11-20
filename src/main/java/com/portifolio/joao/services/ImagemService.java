@@ -1,8 +1,6 @@
 package com.portifolio.joao.services;
 
 import java.util.Optional;
-import java.util.UUID;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -42,7 +40,7 @@ public class ImagemService {
     }
     
     // READ
-    public Imagem findById(UUID id) {
+    public Imagem findById(Long id) {
         Optional<Imagem> imagem = this.imagemRepository.findById(id);
         return imagem.orElseThrow(() -> new RuntimeException(
             "Imagem não encontrada!! id:" + id + ", tipo: " + Imagem.class.getName()
@@ -57,7 +55,7 @@ public class ImagemService {
     }
 
     // DELETE
-    public void delete(UUID id) {
+    public void delete(Long id) {
         findById(id);
         try {
             this.imagemRepository.deleteById(id);

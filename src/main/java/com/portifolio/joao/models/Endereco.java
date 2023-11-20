@@ -1,6 +1,5 @@
 package com.portifolio.joao.models;
 
-import java.util.UUID;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -26,9 +25,9 @@ public class Endereco {
     public static final String TABLE_NAME = "endereco";
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "cod_endereco", unique = true)
-    private UUID cod_endereco;
+    private Long cod_endereco;
 
     @Column(name = "nome_rua", length = 50, nullable = false)
     @NotBlank

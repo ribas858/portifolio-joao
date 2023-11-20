@@ -1,6 +1,5 @@
 package com.portifolio.joao.models;
 
-import java.util.UUID;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -26,9 +25,9 @@ public class Imagem {
 
     // cod_imagem
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "cod_imagem", unique = true)
-    private UUID cod_imagem;
+    private Long cod_imagem;
 
     // titulo
     @Column(name = "titulo", nullable = false)

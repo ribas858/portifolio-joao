@@ -1,6 +1,7 @@
 package com.portifolio.joao.controllers;
 
 import java.net.URI;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -12,62 +13,63 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.portifolio.joao.models.Admin;
-import com.portifolio.joao.services.AdminService;
+import com.portifolio.joao.models.Categoria;
+import com.portifolio.joao.services.CategoriaService;
 
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/admin")
+@RequestMapping("/categoria")
 @Validated
-public class AdminController {
+public class CategoriaController {
     
-
     @Autowired
-    private AdminService adminService;
-
+    private CategoriaService categoriaService;
     
     // CREATE
     @PostMapping
     @Validated
-    public ResponseEntity<Void> create(@Valid @RequestBody Admin objeto) {
-        this.adminService.create(objeto);
-
+    public ResponseEntity<Categoria> create(@Valid @RequestBody Categoria objeto) {
+        this.categoriaService.create(objeto);
         URI uri = ServletUriComponentsBuilder
             .fromCurrentRequest()
             .path("/{id}")
-            .buildAndExpand(objeto.getCod_admin())
+            .buildAndExpand(objeto.getCod_categoria())
             .toUri();
-
         return ResponseEntity.created(uri).build();
     }
 
     // READ
     @GetMapping("/{id}")
-    public ResponseEntity<Admin> findById(@PathVariable Long id) {
-        Admin admin = this.adminService.findById(id);
-        return ResponseEntity.ok().body(admin);
+    public ResponseEntity<Categoria> findById(@PathVariable Long id) {
+        Categoria categoria = this.categoriaService.findById(id);
+        return ResponseEntity.ok().body(categoria);
     }
 
     // UPDATE
     @PutMapping("/{id}")
     @Validated
-    public ResponseEntity<Void> update(@Valid @RequestBody Admin objeto, @PathVariable Long id) {
-        objeto.setCod_admin(id);
-        this.adminService.update(objeto);
+    public ResponseEntity<Void> update(@Valid @RequestBody Categoria categoria, @PathVariable Long id) {
+        categoria.setCod_categoria(id);
+        this.categoriaService.update(categoria);
         return ResponseEntity.noContent().build();
     }
 
     // DELETE
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
-        this.adminService.delete(id);
+        //System.out.println("\n\nID>>>>>>>>>>>>>>>>" + id + "\n\n");
+        this.categoriaService.delete(id);
         return ResponseEntity.noContent().build();
-
     }
 
+    @GetMapping("/admin/{cod_admin}")
+    public ResponseEntity<List<Categoria>> findAllCategoriasByCod_admin(@PathVariable Long cod_admin) {
+        List<Categoria> categorias = this.categoriaService.findAllCategoriaByCod_admin(cod_admin);
+        
+        return ResponseEntity.ok().body(categorias);
+    }
 }

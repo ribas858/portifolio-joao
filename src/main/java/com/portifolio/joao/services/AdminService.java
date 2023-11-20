@@ -2,7 +2,6 @@ package com.portifolio.joao.services;
 
 
 import java.util.Optional;
-import java.util.UUID;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +28,7 @@ public class AdminService {
     }
 
     // READ
-    public Admin findById(UUID id) {
+    public Admin findById(Long id) {
         Optional<Admin> admin = this.adminRepository.findById(id);
         return admin.orElseThrow(() -> new RuntimeException (
             "Admin não encontrado!! id:" + id + ", tipo: " + Admin.class.getName()
@@ -46,7 +45,7 @@ public class AdminService {
     }
 
     // DELETE
-    public void delete(UUID id) {
+    public void delete(Long id) {
         findById(id);
         try {
             this.adminRepository.deleteById(id);

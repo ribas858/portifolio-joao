@@ -1,7 +1,7 @@
 package com.portifolio.joao.services;
 
+import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,7 +32,7 @@ public class CategoriaService {
     }
 
     // READ
-    public Categoria findById(UUID id) {
+    public Categoria findById(Long id) {
         Optional<Categoria> categoria = this.categoriaRepository.findById(id);
 
         return categoria.orElseThrow(() -> new RuntimeException(
@@ -49,13 +49,19 @@ public class CategoriaService {
     }
 
     // DELETE
-    public void delete(UUID id) {
+    public void delete(Long id) {
         findById(id);
         try {
             this.categoriaRepository.deleteById(id);
         } catch (Exception e) {
             throw new RuntimeException("[CATEGORIA] Não é possivel excluir! Entidades relacionadas!!");
         }
+    }
+
+    public List<Categoria> findAllCategoriaByCod_admin(Long id) {
+        this.adminService.findById(id);
+        List<Categoria> categorias = this.categoriaRepository.findAllCategoriaByCod_admin(id);
+        return categorias;
     }
     
 }
