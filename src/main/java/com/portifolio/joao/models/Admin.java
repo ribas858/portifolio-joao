@@ -6,7 +6,6 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -65,20 +64,20 @@ public class Admin {
 
     // salt
 
-    @OneToMany(mappedBy = "categoria_to_admin", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "categoria_to_admin")
     @JsonProperty(access = Access.WRITE_ONLY)
     private List<Categoria> categorias = new ArrayList<Categoria>();
 
-    @OneToMany(mappedBy = "imagem_to_admin", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "imagem_to_admin")
     @JsonProperty(access = Access.WRITE_ONLY)
     private List<Imagem> imagens = new ArrayList<Imagem>();
 
-    @OneToMany(mappedBy = "cliente_to_admin", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "cliente_to_admin")
     @JsonProperty(access = Access.WRITE_ONLY)
     private List<Cliente> clientes = new ArrayList<Cliente>();
 
     ////////////////////////////////////////////////////////////////////////////////
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany()
     @JoinTable( name = "admin_telefone",
                 joinColumns = @JoinColumn(name = "cod_admin"),
                 inverseJoinColumns = @JoinColumn(name = "cod_telefone"),
@@ -89,7 +88,7 @@ public class Admin {
     private List<Telefone> telefones = new ArrayList<Telefone>();
 
     ////////////////////////////////////////////////////////////////////////////////
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany()
     @JoinTable( name = "admin_endereco",
                 joinColumns = @JoinColumn(name = "cod_admin"),
                 inverseJoinColumns = @JoinColumn(name = "cod_endereco"),

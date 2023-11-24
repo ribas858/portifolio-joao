@@ -17,7 +17,10 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.portifolio.joao.models.Admin;
+//import com.portifolio.joao.models.Telefone;
 import com.portifolio.joao.services.AdminService;
+// import com.portifolio.joao.services.EnderecoService;
+// import com.portifolio.joao.services.TelefoneService;
 
 import jakarta.validation.Valid;
 
@@ -29,6 +32,12 @@ public class AdminController {
 
     @Autowired
     private AdminService adminService;
+
+    // @Autowired
+    // private EnderecoService enderecoService;
+
+    // @Autowired
+    // private TelefoneService telefoneService;
 
     
     // CREATE

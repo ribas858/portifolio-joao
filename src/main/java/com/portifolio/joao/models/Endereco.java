@@ -1,14 +1,13 @@
 package com.portifolio.joao.models;
 
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -54,15 +53,15 @@ public class Endereco {
     @NotBlank
     private String cep;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(unique = true, name = "cod_cidade", referencedColumnName = "cod_cidade")
+    @ManyToOne
+    @JoinColumn(name = "cod_cidade", referencedColumnName = "cod_cidade", nullable = false)
     private Cidade endereco_to_cidade;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(unique = true, name = "cod_estado", referencedColumnName = "cod_estado")
+    @ManyToOne
+    @JoinColumn(name = "cod_estado", referencedColumnName = "cod_estado", nullable = false)
     private Estado endereco_to_estado;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(unique = true, name = "cod_pais", referencedColumnName = "cod_pais")
+    @ManyToOne
+    @JoinColumn(name = "cod_pais", referencedColumnName = "cod_pais", nullable = false)
     private Pais endereco_to_pais;
 }
