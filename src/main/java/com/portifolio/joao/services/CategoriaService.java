@@ -5,12 +5,12 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.portifolio.joao.models.Admin;
 import com.portifolio.joao.models.Categoria;
 import com.portifolio.joao.repositories.CategoriaRepository;
 
-import jakarta.transaction.Transactional;
 
 @Service
 public class CategoriaService {
@@ -20,6 +20,7 @@ public class CategoriaService {
 
     @Autowired
     private AdminService adminService;
+
 
     // CREATE
     @Transactional
@@ -44,7 +45,8 @@ public class CategoriaService {
     @Transactional
     public Categoria update(Categoria objeto) {
         Categoria categoria = findById(objeto.getCod_categoria());
-        categoria = objeto;
+        categoria.setImagems(objeto.getImagems());
+        categoria.setNome(objeto.getNome());
         return categoriaRepository.save(categoria);
     }
 

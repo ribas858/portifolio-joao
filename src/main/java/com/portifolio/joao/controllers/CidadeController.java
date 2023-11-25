@@ -16,61 +16,63 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.portifolio.joao.models.Categoria;
-import com.portifolio.joao.services.CategoriaService;
+import com.portifolio.joao.models.Cidade;
+import com.portifolio.joao.services.CidadeService;
 
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/categoria")
+@RequestMapping("/cidade")
 @Validated
-public class CategoriaController {
-    
+public class CidadeController {
+
     @Autowired
-    private CategoriaService categoriaService;
-    
+    private CidadeService cidadeService;
 
     // CREATE
     @PostMapping
     @Validated
-    public ResponseEntity<Categoria> create(@Valid @RequestBody Categoria objeto) {
-        this.categoriaService.create(objeto);
+    public ResponseEntity<Cidade> create(@Valid @RequestBody Cidade objeto) {
+        this.cidadeService.create(objeto);
+
         URI uri = ServletUriComponentsBuilder
             .fromCurrentRequest()
             .path("/{id}")
-            .buildAndExpand(objeto.getCod_categoria())
+            .buildAndExpand(objeto.getCod_cidade())
             .toUri();
+
         return ResponseEntity.created(uri).build();
+        
     }
 
     // READ
     @GetMapping("/{id}")
-    public ResponseEntity<Categoria> findById(@PathVariable Long id) {
-        Categoria categoria = this.categoriaService.findById(id);
-        return ResponseEntity.ok().body(categoria);
+    public ResponseEntity<Cidade> findById(@PathVariable Long id) {
+        Cidade cidade = this.cidadeService.findById(id);
+
+        return ResponseEntity.ok().body(cidade);
     }
 
     // UPDATE
     @PutMapping("/{id}")
-    @Validated
-    public ResponseEntity<Void> update(@Valid @RequestBody Categoria categoria, @PathVariable Long id) {
-        categoria.setCod_categoria(id);
-        this.categoriaService.update(categoria);
+    public ResponseEntity<Void> update(@Valid @RequestBody Cidade objeto, @PathVariable Long id) {
+        objeto.setCod_cidade(id);
+        this.cidadeService.update(objeto);
         return ResponseEntity.noContent().build();
     }
 
     // DELETE
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
-        //System.out.println("\n\nID>>>>>>>>>>>>>>>>" + id + "\n\n");
-        this.categoriaService.delete(id);
+        this.cidadeService.delete(id);
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("/admin/{cod_admin}")
-    public ResponseEntity<List<Categoria>> findAllCategoriasByCod_admin(@PathVariable Long cod_admin) {
-        List<Categoria> categorias = this.categoriaService.findAllCategoriaByCod_admin(cod_admin);
-        
-        return ResponseEntity.ok().body(categorias);
+    // FIND ALL
+    @GetMapping("/estado/{uf}")
+    public ResponseEntity<List<Cidade>> findAllCidadeByUF(@PathVariable String uf) {
+        List<Cidade> cidades = this.cidadeService.findAllCidadesByEstadoUF(uf);
+        return ResponseEntity.ok().body(cidades);
     }
+    
 }

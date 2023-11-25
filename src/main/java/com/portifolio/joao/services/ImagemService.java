@@ -1,8 +1,11 @@
 package com.portifolio.joao.services;
 
+import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.portifolio.joao.models.Admin;
 import com.portifolio.joao.models.Categoria;
@@ -26,15 +29,19 @@ public class ImagemService {
     private ClienteService clienteService;
 
     // CREATE
+    @Transactional
     public Imagem create(Imagem objeto) {
         Admin admin = this.adminService.findById(objeto.getImagem_to_admin().getCod_admin());
         Categoria categoria = this.categoriaService.findById(objeto.getImagem_to_categoria().getCod_categoria());
-        Cliente cliente = this.clienteService.findById(objeto.getImagem_to_cliente().getCod_cliente());
-
+        
         objeto.setCod_imagem(null);
         objeto.setImagem_to_admin(admin);
         objeto.setImagem_to_categoria(categoria);
-        objeto.setImagem_to_cliente(cliente);
+
+        if (Objects.nonNull(objeto.getImagem_to_cliente())) {
+            Cliente cliente = this.clienteService.findById(objeto.getImagem_to_cliente().getCod_cliente());
+            objeto.setImagem_to_cliente(cliente);
+        }
 
         return this.imagemRepository.save(objeto);
     }
@@ -48,9 +55,15 @@ public class ImagemService {
     }
     
     // UPDATE
+    @Transactional
     public Imagem update(Imagem objeto) {
         Imagem imagem = findById(objeto.getCod_imagem());
-        imagem = objeto;
+        imagem.setCaminho(objeto.getCaminho());
+        imagem.setDescricao(objeto.getDescricao());
+        
+        imagem.setImagem_to_categoria(objeto.getImagem_to_categoria());
+        imagem.setImagem_to_cliente(objeto.getImagem_to_cliente());
+        imagem.setTitulo(objeto.getTitulo());
         return this.imagemRepository.save(imagem);
     }
 
@@ -62,5 +75,11 @@ public class ImagemService {
         } catch (Exception e) {
             throw new RuntimeException("[IMAGEM] Não é possivel excluir! Entidades relacionadas!!");
         }
+    }
+
+    public List<Imagem> findAllImagemByCod_categoria(Long id) {
+        this.adminService.findById(id);
+        List<Imagem> imagens = this.imagemRepository.findAllImagensByCod_categoria(id);
+        return imagens;
     }
 }

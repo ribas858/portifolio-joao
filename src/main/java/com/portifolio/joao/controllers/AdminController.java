@@ -76,7 +76,6 @@ public class AdminController {
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         this.adminService.delete(id);
         return ResponseEntity.noContent().build();
-
     }
 
 }

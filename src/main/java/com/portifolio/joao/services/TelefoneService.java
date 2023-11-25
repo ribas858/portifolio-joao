@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.portifolio.joao.models.Telefone;
 import com.portifolio.joao.repositories.TelefoneRepository;
@@ -17,6 +18,7 @@ public class TelefoneService {
     private TelefoneRepository telefoneRepository;
 
     // CREATE
+    @Transactional
     public List<Telefone> create(List<Telefone> objetosTelefones) {
         for (int i = 0; i < objetosTelefones.size(); i++) {
             objetosTelefones.get(i).setCod_telefone(null);
@@ -33,6 +35,7 @@ public class TelefoneService {
     }
 
     // UPDATE
+    @Transactional
     public List<Telefone> update(List<Telefone> objetosTelefones) {
         List<Telefone> telefones = new ArrayList<Telefone>();
         for (Telefone obj : objetosTelefones ) {

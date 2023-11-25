@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.portifolio.joao.models.Pais;
 import com.portifolio.joao.repositories.PaisRepository;
@@ -14,6 +15,7 @@ public class PaisService {
     private PaisRepository paisRepository;
 
     // CREATE
+    @Transactional
     public Pais create(Pais objeto) {
         objeto.setCod_pais(null);
         return this.paisRepository.save(objeto);
@@ -28,6 +30,7 @@ public class PaisService {
     }
 
     // UPDATE
+    @Transactional
     public Pais update(Pais objeto) {
         Pais pais = findById(objeto.getCod_pais());
         pais = objeto;

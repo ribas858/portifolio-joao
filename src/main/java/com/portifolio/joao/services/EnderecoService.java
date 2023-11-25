@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.portifolio.joao.models.Cidade;
 import com.portifolio.joao.models.Endereco;
@@ -29,6 +30,7 @@ public class EnderecoService {
     private PaisService paisService;
 
     // CREATE
+    @Transactional
     public List<Endereco> create(List<Endereco> objetosEnderecos) {
         //System.out.printf("===========================================----------------------\n\n");
         //System.out.print("bairro: " + objetosEnderecos.get(0).getBairro() + " id:" + objetosEnderecos.get(0).getCod_endereco() + "\n");
@@ -53,6 +55,7 @@ public class EnderecoService {
     }
 
     // UPDATE
+    @Transactional
     public List<Endereco> update(List<Endereco> objetosEnderecos) {
         List<Endereco> enderecos = new ArrayList<Endereco>();
         for (Endereco obj : objetosEnderecos ) {

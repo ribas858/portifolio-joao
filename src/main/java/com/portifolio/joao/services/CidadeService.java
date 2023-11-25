@@ -1,9 +1,11 @@
 package com.portifolio.joao.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.portifolio.joao.models.Cidade;
 import com.portifolio.joao.repositories.CidadeRepository;
@@ -15,6 +17,7 @@ public class CidadeService {
     private CidadeRepository cidadeRepository;
 
     // CREATE
+    @Transactional
     public Cidade create(Cidade objeto) {
         objeto.setCod_cidade(null);
         return this.cidadeRepository.save(objeto);
@@ -29,6 +32,7 @@ public class CidadeService {
     }
 
     // UPDATE
+    @Transactional
     public Cidade update(Cidade objeto) {
         Cidade cidade = findById(objeto.getCod_cidade());
         cidade = objeto;
@@ -43,5 +47,11 @@ public class CidadeService {
         } catch (Exception e) {
             throw new RuntimeException("[CIDADE] Não é possivel excluir! Entidades relacionadas!!");
         }
+    }
+
+    // FIND ALL
+    public List<Cidade> findAllCidadesByEstadoUF(String uf) {
+        List<Cidade> cidades = this.cidadeRepository.findAllCidadesByEstadoUF(uf);
+        return cidades;
     }
 }

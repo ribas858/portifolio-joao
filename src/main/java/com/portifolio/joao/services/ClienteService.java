@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.portifolio.joao.models.Admin;
 import com.portifolio.joao.models.Cliente;
@@ -19,6 +20,7 @@ public class ClienteService {
     private AdminService adminService;
 
     // CREATE
+    @Transactional
     public Cliente create(Cliente objeto) {
         Admin admin = this.adminService.findById(objeto.getCliente_to_admin().getCod_admin());
         objeto.setCod_cliente(null);
@@ -35,6 +37,7 @@ public class ClienteService {
     }
 
     // UPDATE
+    @Transactional
     public Cliente update(Cliente objeto) {
         Cliente cliente = findById(objeto.getCod_cliente());
         cliente = objeto;

@@ -10,6 +10,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -46,16 +47,18 @@ public class Imagem {
     // cod_admin
     @ManyToOne
     @JoinColumn(name = "cod_admin", referencedColumnName = "cod_admin", nullable = false)
+    @NotNull
     private Admin imagem_to_admin;
 
     // cod_categoria
     @ManyToOne
     @JoinColumn(name = "cod_categoria", referencedColumnName = "cod_categoria", nullable = false)
+    @NotNull
     private Categoria imagem_to_categoria;
 
     // cod_cliente
     @ManyToOne
-    @JoinColumn(name = "cod_cliente", referencedColumnName = "cod_cliente", nullable = false)
+    @JoinColumn(name = "cod_cliente", referencedColumnName = "cod_cliente")
     private Cliente imagem_to_cliente;
 
 
