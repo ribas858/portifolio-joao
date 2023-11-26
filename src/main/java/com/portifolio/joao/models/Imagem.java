@@ -1,6 +1,9 @@
 package com.portifolio.joao.models;
 
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -48,6 +51,7 @@ public class Imagem {
     @ManyToOne
     @JoinColumn(name = "cod_admin", referencedColumnName = "cod_admin", nullable = false)
     @NotNull
+    @JsonProperty(access = Access.WRITE_ONLY)
     private Admin imagem_to_admin;
 
     // cod_categoria
@@ -59,6 +63,7 @@ public class Imagem {
     // cod_cliente
     @ManyToOne
     @JoinColumn(name = "cod_cliente", referencedColumnName = "cod_cliente")
+    @JsonProperty(access = Access.WRITE_ONLY)
     private Cliente imagem_to_cliente;
 
 

@@ -3,6 +3,9 @@ package com.portifolio.joao.models;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -60,6 +63,7 @@ public class Cliente {
     private Admin cliente_to_admin;
 
     @OneToMany(mappedBy = "imagem_to_cliente")
+    @JsonProperty(access = Access.WRITE_ONLY)
     private List<Imagem> imagens = new ArrayList<Imagem>();
 
     @ManyToMany

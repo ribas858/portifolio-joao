@@ -2,12 +2,14 @@ package com.portifolio.joao.services;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.portifolio.joao.models.Admin;
 import com.portifolio.joao.models.Cidade;
 import com.portifolio.joao.models.Endereco;
 import com.portifolio.joao.models.Estado;
@@ -28,6 +30,7 @@ public class EnderecoService {
 
     @Autowired
     private PaisService paisService;
+
 
     // CREATE
     @Transactional
@@ -68,11 +71,16 @@ public class EnderecoService {
 
     // DELETE
     public void delete(Long id) {
-        findById(id);
+        Endereco endereco = findById(id);
         try {
+            Admin admin = find_admin(find_cod_admin_by_cod_endereco(id));
+            if(Objects.nonNull(admin)) {
+               admin.getEnderecos().remove(endereco);
+            }
+
             this.enderecoRepository.deleteById(id);
         } catch (Exception e) {
-            throw new RuntimeException("[ENDERECO] Não é possivel excluir! Entidades relacionadas!!");
+            throw new RuntimeException("[ENDERECO] Não é possivel excluir! Entidades relacionadas!!" + e);
         }
     }
 
@@ -86,6 +94,40 @@ public class EnderecoService {
         } catch (Exception e) {
             throw new RuntimeException("[ENDERECO LISTA] Não é possivel excluir! Entidades relacionadas!!");
         }
+    }
+
+    public List<Long> find_all_ids_endereco_by_cod_admin(Long cod_admin) {
+        Optional<List<Long>> enderecosIds = this.enderecoRepository.find_all_ids_endereco_by_cod_admin(cod_admin);
+        return enderecosIds.orElseThrow(() -> new RuntimeException(
+            "Admin não encontrado!! id:" + cod_admin + ", tipo: " + Admin.class.getName()
+        ));
+    }
+
+
+    // FIND ALL : COD ADMIN
+    public List<Endereco> find_enderecos_admin(Long cod_admin) {
+        List<Long> enderecosIds = find_all_ids_endereco_by_cod_admin(cod_admin);
+        List<Endereco> enderecos = new ArrayList<Endereco>();
+        for (Long endId : enderecosIds) {
+            enderecos.add(findById(endId));
+        }
+        return enderecos;
+    }
+
+    // FIND COD ADMIN
+    public Long find_cod_admin_by_cod_endereco(Long cod_endereco) {
+        Optional<Long> cod_admin = this.enderecoRepository.find_cod_admin_by_cod_endereco(cod_endereco);
+        return cod_admin.orElseThrow(() -> new RuntimeException(
+            "Cod admin relacionado com Cod endereco não encontrado!! id:" + cod_endereco + ", tipo: " + Endereco.class.getName()
+        ));
+    }
+
+    // FIND ADMIN
+    public Admin find_admin(Long cod_admin) {
+        Optional<Admin> admin = this.enderecoRepository.find_admin(cod_admin);
+        return admin.orElseThrow(() -> new RuntimeException(
+            "Admin não encontrado!! id:" + cod_admin + ", tipo: " + Admin.class.getName()
+        ));
     }
 
 }

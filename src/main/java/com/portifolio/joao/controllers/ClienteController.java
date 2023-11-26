@@ -13,67 +13,68 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.portifolio.joao.models.Cidade;
-import com.portifolio.joao.services.CidadeService;
+import com.portifolio.joao.models.Cliente;
+import com.portifolio.joao.services.ClienteService;
 
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/cidade")
+@RequestMapping("/cliente")
 @Validated
-public class CidadeController {
-
+public class ClienteController {
+    
     @Autowired
-    private CidadeService cidadeService;
+    private ClienteService clienteService;
 
     // CREATE
     @PostMapping
     @Validated
-    public ResponseEntity<Cidade> create(@Valid @RequestBody Cidade objeto) {
-        this.cidadeService.create(objeto);
+    public ResponseEntity<Cliente> create(@Valid @RequestBody Cliente objeto) {
+        this.clienteService.create(objeto);
 
         URI uri = ServletUriComponentsBuilder
             .fromCurrentRequest()
             .path("/{id}")
-            .buildAndExpand(objeto.getCod_cidade())
+            .buildAndExpand(objeto.getCod_cliente())
             .toUri();
-
-        return ResponseEntity.created(uri).build();
         
+        return ResponseEntity.created(uri).build();
     }
 
     // READ
     @GetMapping("/{id}")
-    public ResponseEntity<Cidade> findById(@PathVariable Long id) {
-        Cidade cidade = this.cidadeService.findById(id);
-
-        return ResponseEntity.ok().body(cidade);
+    public ResponseEntity<Cliente> findById(@PathVariable Long id) {
+        Cliente cliente = this.clienteService.findById(id);
+        return ResponseEntity.ok().body(cliente);
     }
+    
 
     // UPDATE
     @PutMapping("/{id}")
     @Validated
-    public ResponseEntity<Void> update(@Valid @RequestBody Cidade objeto, @PathVariable Long id) {
-        objeto.setCod_cidade(id);
-        this.cidadeService.update(objeto);
+    public ResponseEntity<Void> update(@Valid @RequestBody Cliente objeto, @PathVariable Long id) {
+        objeto.setCod_cliente(id);
+        this.clienteService.update(objeto);
         return ResponseEntity.noContent().build();
     }
 
     // DELETE
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
-        this.cidadeService.delete(id);
+        this.clienteService.delete(id);
         return ResponseEntity.noContent().build();
     }
 
-    // FIND ALL
-    @GetMapping("/estado/{uf}")
-    public ResponseEntity<List<Cidade>> findAllCidadeByUF(@PathVariable String uf) {
-        List<Cidade> cidades = this.cidadeService.findAllCidadesByEstadoUF(uf);
-        return ResponseEntity.ok().body(cidades);
+    // FIND ALL : COD ADMIN
+    @GetMapping("/admin/{id}")
+    public ResponseEntity<List<Cliente>> findAllClientesByCod_admin(@PathVariable Long id) {
+        List<Cliente> clientes = this.clienteService.findAllClientesByCod_admin(id);
+        return ResponseEntity.ok().body(clientes);
     }
-    
+
+
 }

@@ -77,9 +77,29 @@ public class ImagemService {
         }
     }
 
+    // FIND ALL : COD CATEGORIA
     public List<Imagem> findAllImagemByCod_categoria(Long id) {
-        this.adminService.findById(id);
+        this.categoriaService.findById(id);
         List<Imagem> imagens = this.imagemRepository.findAllImagensByCod_categoria(id);
         return imagens;
     }
+
+    // FIND ALL : COD CLIENTE
+    public List<Imagem> findAllImagemByCod_cliente(Long id) {
+        this.clienteService.findById(id);
+        List<Imagem> imagens = this.imagemRepository.findAllImagensByCod_cliente(id);
+        return imagens;
+    }
+
+    // DELETE ALL
+    // public void deleteAllByIds(List<Long> ids) {
+    //     for (Long i : ids) {
+    //         findById(i);
+    //     }
+    //     try {
+    //         this.imagemRepository.deleteAllByIdInBatch(ids);
+    //     } catch (Exception e) {
+    //         throw new RuntimeException("[IMAGEM LISTA] Não é possivel excluir! Entidades relacionadas!!");
+    //     }
+    // }
 }

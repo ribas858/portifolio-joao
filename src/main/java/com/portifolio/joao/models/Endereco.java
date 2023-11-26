@@ -64,4 +64,5 @@ public class Endereco {
     @ManyToOne
     @JoinColumn(name = "cod_pais", referencedColumnName = "cod_pais", nullable = false)
     private Pais endereco_to_pais;
+
 }

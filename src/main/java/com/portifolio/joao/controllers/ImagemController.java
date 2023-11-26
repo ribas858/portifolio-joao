@@ -69,10 +69,17 @@ public class ImagemController {
         return ResponseEntity.noContent().build();
     }
 
-    // FIND ALL
+    // FIND ALL : COD CATEGORIA
     @GetMapping("/categoria/{cod_categoria}")
     public ResponseEntity<List<Imagem>> findAllImagensByCod_categoria(@PathVariable Long cod_categoria) {
         List<Imagem> imagens = this.imagemService.findAllImagemByCod_categoria(cod_categoria);
+        return ResponseEntity.ok().body(imagens);
+    }
+
+    // FIND ALL : COD CLIENTE
+    @GetMapping("/cliente/{cod_cliente}")
+    public ResponseEntity<List<Imagem>> findAllImagensByCod_cliente(@PathVariable Long cod_cliente) {
+        List<Imagem> imagens = this.imagemService.findAllImagemByCod_cliente(cod_cliente);
         return ResponseEntity.ok().body(imagens);
     }
 

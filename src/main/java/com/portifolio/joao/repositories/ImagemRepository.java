@@ -20,6 +20,9 @@ public interface ImagemRepository extends JpaRepository<Imagem, Long> {
     @Query(value = "SELECT i FROM Imagem i WHERE i.imagem_to_categoria.cod_categoria = :id")
     List<Imagem> findAllImagensByCod_categoria(@Param("id") Long id);
 
+    @Query(value = "SELECT i FROM Imagem i WHERE i.imagem_to_cliente.cod_cliente = :id")
+    List<Imagem> findAllImagensByCod_cliente(@Param("id") Long id);
+
     // @Query(value = "SELECT * FROM imagem i WHERE i.cod_categoria = :id ", nativeQuery = true)
     // List<Imagem> findByCategoria_id3(@Param("id") UUID id);
 }
