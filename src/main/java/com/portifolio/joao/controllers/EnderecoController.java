@@ -2,6 +2,7 @@ package com.portifolio.joao.controllers;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,25 +42,10 @@ public class EnderecoController {
     @Validated
     public ResponseEntity<List<Endereco>> create(@Valid @RequestBody AdminEnderecoUtil objetos) {
         
-        Admin admin = this.adminService.findById(objetos.getCod_admin());
-        if (admin.getEnderecos().size() > 1) {
-            throw new RuntimeException("[ENDERECO] Telefones cheio!! max -> 2");
-        } else {
-            objetos.setEnderecos(objetos.getEnderecos().subList(0, 2 - admin.getEnderecos().size()));
-            
-            this.enderecoService.create(objetos.getEnderecos());
-            Integer size = admin.getEnderecos().size();
-            
-            for (Endereco endereco : objetos.getEnderecos()) {
-                admin.getEnderecos().add(endereco);
-                size++;
-                if (size == 2) {
-                    break;
-                }
-            }
+        Admin admin = this.enderecoService.add_telefone(objetos);
+        if (Objects.nonNull(admin)) {
             this.adminService.update(admin);
         }
-
         List<URI> uris = objetos.getEnderecos().stream()
             .map(objeto -> ServletUriComponentsBuilder
                     .fromCurrentRequest()

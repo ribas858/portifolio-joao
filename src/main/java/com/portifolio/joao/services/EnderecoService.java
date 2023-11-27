@@ -9,11 +9,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.portifolio.joao.Utils.AdminEnderecoUtil;
 import com.portifolio.joao.models.Admin;
 import com.portifolio.joao.models.Cidade;
 import com.portifolio.joao.models.Endereco;
 import com.portifolio.joao.models.Estado;
 import com.portifolio.joao.models.Pais;
+import com.portifolio.joao.repositories.AdminRepository;
 import com.portifolio.joao.repositories.EnderecoRepository;
 
 @Service
@@ -30,6 +32,9 @@ public class EnderecoService {
 
     @Autowired
     private PaisService paisService;
+
+    @Autowired
+    private AdminRepository adminRepository;
 
 
     // CREATE
@@ -96,22 +101,10 @@ public class EnderecoService {
         }
     }
 
-    public List<Long> find_all_ids_endereco_by_cod_admin(Long cod_admin) {
-        Optional<List<Long>> enderecosIds = this.enderecoRepository.find_all_ids_endereco_by_cod_admin(cod_admin);
-        return enderecosIds.orElseThrow(() -> new RuntimeException(
-            "Admin não encontrado!! id:" + cod_admin + ", tipo: " + Admin.class.getName()
-        ));
-    }
-
-
     // FIND ALL : COD ADMIN
     public List<Endereco> find_enderecos_admin(Long cod_admin) {
-        List<Long> enderecosIds = find_all_ids_endereco_by_cod_admin(cod_admin);
-        List<Endereco> enderecos = new ArrayList<Endereco>();
-        for (Long endId : enderecosIds) {
-            enderecos.add(findById(endId));
-        }
-        return enderecos;
+        Admin admin = find_admin(cod_admin);
+        return admin.getEnderecos();
     }
 
     // FIND COD ADMIN
@@ -124,10 +117,36 @@ public class EnderecoService {
 
     // FIND ADMIN
     public Admin find_admin(Long cod_admin) {
-        Optional<Admin> admin = this.enderecoRepository.find_admin(cod_admin);
+        Optional<Admin> admin = this.adminRepository.findById(cod_admin);
         return admin.orElseThrow(() -> new RuntimeException(
             "Admin não encontrado!! id:" + cod_admin + ", tipo: " + Admin.class.getName()
         ));
+    }
+
+    // ADD TELEFONE
+    public Admin add_telefone(AdminEnderecoUtil objetos) {
+        if (Objects.isNull(objetos.getCod_admin())) {
+            throw new RuntimeException("[ENDERECO] Relacionamento não encontrado!!! ADMIN");
+        }
+
+        Admin admin = find_admin(objetos.getCod_admin());
+        if (admin.getEnderecos().size() > 1) {
+            throw new RuntimeException("[ENDERECO] Enderecos cheio!! max -> 2");
+        } else {
+            objetos.setEnderecos(objetos.getEnderecos().subList(0, 2 - admin.getEnderecos().size()));
+            
+            create(objetos.getEnderecos());
+            Integer size = admin.getEnderecos().size();
+            
+            for (Endereco endereco : objetos.getEnderecos()) {
+                admin.getEnderecos().add(endereco);
+                size++;
+                if (size == 2) {
+                    break;
+                }
+            }
+        }
+        return admin;
     }
 
 }
