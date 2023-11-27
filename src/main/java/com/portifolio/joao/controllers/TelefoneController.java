@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.portifolio.joao.Utils.AdminCliente;
+import com.portifolio.joao.Utils.AdminClienteUtil;
 import com.portifolio.joao.Utils.TelefoneUtil;
 import com.portifolio.joao.models.Telefone;
 import com.portifolio.joao.services.AdminService;
@@ -46,7 +46,7 @@ public class TelefoneController {
     @Validated
     public ResponseEntity<Telefone> create(@Valid @RequestBody TelefoneUtil objetos) {
 
-        AdminCliente adminCliente = this.telefoneService.add_telefone(objetos);
+        AdminClienteUtil adminCliente = this.telefoneService.add_telefone(objetos);
 
         if (Objects.nonNull(adminCliente.getAdmin())) {
             this.adminService.update(adminCliente.getAdmin());

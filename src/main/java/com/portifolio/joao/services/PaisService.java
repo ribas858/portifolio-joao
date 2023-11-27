@@ -1,5 +1,6 @@
 package com.portifolio.joao.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,5 +46,11 @@ public class PaisService {
         } catch (Exception e) {
             throw new RuntimeException("[PAIS] Não é possivel excluir! Entidades relacionadas!!");
         }
+    }
+
+    // FIND ALL
+    public List<Pais> find_all() {
+        List<Pais> paises = this.paisRepository.findAll();
+        return paises;
     }
 }

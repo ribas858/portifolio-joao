@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.portifolio.joao.Utils.AdminCliente;
+import com.portifolio.joao.Utils.AdminClienteUtil;
 import com.portifolio.joao.Utils.TelefoneUtil;
 import com.portifolio.joao.models.Admin;
 import com.portifolio.joao.models.Cliente;
@@ -141,9 +141,9 @@ public class TelefoneService {
     }
 
     // ADD TELEFONE
-    public AdminCliente add_telefone(TelefoneUtil objetos) {
+    public AdminClienteUtil add_telefone(TelefoneUtil objetos) {
 
-        AdminCliente adminCliente = new AdminCliente();
+        AdminClienteUtil adminCliente = new AdminClienteUtil();
         adminCliente.setAdmin(null);
         adminCliente.setCliente(null);
 

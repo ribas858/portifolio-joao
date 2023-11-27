@@ -11,7 +11,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @EqualsAndHashCode
-public class AdminCliente {
+public class AdminClienteUtil {
     
     private Admin admin;
 
