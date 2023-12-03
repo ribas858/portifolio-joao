@@ -83,5 +83,13 @@ public class ImagemController {
         return ResponseEntity.ok().body(imagens);
     }
 
+    // FIND ALL Imagens
+    @GetMapping
+    public ResponseEntity<List<Imagem>> findAll() {
+        List<Imagem> imagens = this.imagemService.find_all();
+        return ResponseEntity.ok().body(imagens);
+    }
+
+
     
 }

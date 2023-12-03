@@ -1,4 +1,4 @@
-package com.portifolio.joao.config;
+package com.portifolio.joao.configs;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;

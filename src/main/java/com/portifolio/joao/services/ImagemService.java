@@ -102,4 +102,9 @@ public class ImagemService {
     //         throw new RuntimeException("[IMAGEM LISTA] Não é possivel excluir! Entidades relacionadas!!");
     //     }
     // }
+
+    public List<Imagem> find_all() {
+        List<Imagem> imagens = this.imagemRepository.findAll();
+        return imagens;
+    }
 }
